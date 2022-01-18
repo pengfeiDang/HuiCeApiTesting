@@ -1,0 +1,17 @@
+config:
+    name: "登录"
+    base_url: "http://appserver.huice.com"
+    feature: "大型商城"
+    story: "用户管理模块"
+steps:
+-
+      name: 登录
+      request:
+          method: POST
+          url: /customer/login/account
+          data:
+              email: 65132090@qq.com
+              password: 123456
+      validate:
+          - eq: [ "body.code", 200, '验证登录状态码' ]
+          - eq: [ "body.message", "process success", '验证提示信息']

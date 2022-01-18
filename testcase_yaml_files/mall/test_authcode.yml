@@ -1,0 +1,15 @@
+config:
+    name: "获取验证码"
+    base_url: "http://121.37.169.128:8201"
+
+steps:
+-
+      name: get authcode
+      request:
+          method: GET
+          url: /mall-member/sso/getAuthCode
+          params:
+              telephone: 134011828883
+      validate:
+          - eq: [ "body.code", 200, '验证状态码' ]
+          - eq: [ "body.message", "获取验证码成功", '验证提示信息']

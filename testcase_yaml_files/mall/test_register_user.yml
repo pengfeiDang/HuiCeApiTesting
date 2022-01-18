@@ -1,0 +1,32 @@
+config:
+    name: "注册用户"
+    base_url: "http://121.37.169.128:8201"
+    variables:
+      tel: 13401182883
+steps:
+-
+      name: 获取验证码
+      request:
+          method: GET
+          url: /mall-member/sso/getAuthCode
+          params:
+              telephone: $tel
+      validate:
+          - eq: [ "code", 200, '验证状态码' ]
+          - eq: [ "message", "获取验证码成功", '验证提示信息']
+      extract:
+          authcode: "body.data"
+
+-
+      name: 注册用户
+      request:
+          method: POST
+          url: /mall-member/sso/register
+          params:
+              authCode: $authcode
+              telephone: $tel
+              username: huice00009
+              password: 123456
+      validate:
+          - eq: [ "code", 200, '验证状态码' ]
+          - eq: [ "message", "注册成功", '合法数据注册']

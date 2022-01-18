@@ -1,0 +1,13 @@
+config:
+    name: "获取首页信息"
+    base_url: "http://appserver.huice.com"
+
+steps:
+-
+      name: 首页信息
+      request:
+          method: GET
+          url: /cms/home/index
+      validate:
+          - eq: [ "body.code", 200, '验证状态码' ]
+          - eq: [ "body.message", "process success", '验证提示信息']

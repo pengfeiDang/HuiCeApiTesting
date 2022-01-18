@@ -1,0 +1,48 @@
+config:
+    name: "testing22"
+    base_url: "http://121.37.169.128:8201"
+    verify: True
+
+teststeps:
+-
+      name: get authcode
+      request:
+          method: GET
+          url: /mall-member/sso/getAuthCode
+          params:
+              telephone: 18729594835
+      validate:
+          - eq: [ "status_code", 200 ]
+          - eq: [ "message", "process success" ]
+-
+    name: open index
+    request:
+        method: GET
+        url: /mall-portal/home/contentNew
+    validate:
+        - eq: ["status_code", 200]
+        - eq: ["message", "process success"]
+-
+    name: register
+    request:
+        method: POST
+        url: /mall-member/sso/register
+        data:
+            username: admintest
+            password: admin
+            telephone: 18729594835
+            authCode: $data
+    validata:
+        -eq: ["status_code", 200]
+-
+    name: login
+    request:
+        method: POST
+        url: /mall-member/sso/login
+        headers:
+            Content-Type: "application/x-www-form-urlencoded"
+        data:
+            username: admintest
+            password: admin
+    validate:
+        - eq: ["status_code", 200]
